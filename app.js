@@ -1,5 +1,4 @@
-
-const STORAGE_KEY = "agenda-ferias-storage-v1";
+const STORAGE_KEY = "agenda-ferias-storage-v2";
 
 function getData() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -53,20 +52,38 @@ function updateField(index, field, value) {
   state[index][field] = value;
 }
 
-function createBlock(index, field, labelText, value) {
+function getBlockMeta(field) {
+  if (field === "morning") return { label: "Manhã", icon: "☀️" };
+  if (field === "afternoon") return { label: "Tarde", icon: "🌤️" };
+  return { label: "Noite", icon: "🌙" };
+}
+
+function createBlock(index, field, value) {
+  const meta = getBlockMeta(field);
+
   const wrapper = document.createElement("div");
   wrapper.className = "block";
 
+  const blockTitle = document.createElement("div");
+  blockTitle.className = "block-title";
+
+  const icon = document.createElement("div");
+  icon.className = "block-icon";
+  icon.textContent = meta.icon;
+
   const label = document.createElement("label");
-  label.textContent = labelText;
+  label.textContent = meta.label;
 
   const textarea = document.createElement("textarea");
   textarea.value = value || "";
+  textarea.placeholder = `Escreva aqui o plano para ${meta.label.toLowerCase()}...`;
   textarea.addEventListener("input", (event) => {
     updateField(index, field, event.target.value);
   });
 
-  wrapper.appendChild(label);
+  blockTitle.appendChild(icon);
+  blockTitle.appendChild(label);
+  wrapper.appendChild(blockTitle);
   wrapper.appendChild(textarea);
 
   return wrapper;
@@ -74,20 +91,32 @@ function createBlock(index, field, labelText, value) {
 
 function render() {
   const grid = document.getElementById("scheduleGrid");
+  const dayCount = document.getElementById("dayCount");
   grid.innerHTML = "";
+  dayCount.textContent = state.length;
 
   state.forEach((dayData, index) => {
     const card = document.createElement("article");
     card.className = "day-card";
 
+    const header = document.createElement("div");
+    header.className = "day-header";
+
     const title = document.createElement("h2");
     title.className = "day-title";
     title.textContent = dayData.day;
 
-    card.appendChild(title);
-    card.appendChild(createBlock(index, "morning", "Manhã", dayData.morning));
-    card.appendChild(createBlock(index, "afternoon", "Tarde", dayData.afternoon));
-    card.appendChild(createBlock(index, "night", "Noite", dayData.night));
+    const mini = document.createElement("span");
+    mini.className = "day-mini";
+    mini.textContent = `Dia ${index + 1}`;
+
+    header.appendChild(title);
+    header.appendChild(mini);
+
+    card.appendChild(header);
+    card.appendChild(createBlock(index, "morning", dayData.morning));
+    card.appendChild(createBlock(index, "afternoon", dayData.afternoon));
+    card.appendChild(createBlock(index, "night", dayData.night));
 
     grid.appendChild(card);
   });

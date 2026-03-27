@@ -4,30 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agenda de Férias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">App simples • GitHub Pages</p>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <div class="app-shell">
+    <header class="hero-card">
+      <div class="hero-copy">
+        <span class="badge">Planner bonito • simples • editável</span>
         <h1>Agenda de Férias</h1>
-        <p class="subtitle">Pode editar diretamente nas caixas. As alterações ficam guardadas neste navegador.</p>
+        <p class="subtitle">Edite diretamente nas caixas. Guarde no navegador, exporte um backup e mantenha tudo com visual de app clean.</p>
       </div>
 
-      <div class="actions">
-        <button id="saveBtn" class="primary">Guardar</button>
-        <button id="resetBtn">Repor original</button>
-        <button id="exportBtn">Exportar backup</button>
+      <div class="hero-actions">
+        <button id="saveBtn" class="btn btn-primary">Guardar</button>
+        <button id="resetBtn" class="btn btn-secondary">Repor original</button>
+        <button id="exportBtn" class="btn btn-ghost">Exportar backup</button>
       </div>
     </header>
+
+    <section class="info-strip">
+      <div class="info-pill"><strong id="dayCount">0</strong><span>dias</span></div>
+      <div class="info-pill"><strong>3</strong><span>blocos por dia</span></div>
+      <div class="info-pill"><strong>Local</strong><span>guardado no browser</span></div>
+    </section>
 
     <main>
       <section id="scheduleGrid" class="schedule-grid"></section>
     </main>
 
     <footer class="footer-note">
-      <strong>Nota:</strong> esta versão guarda os dados no navegador do dispositivo. Para atualizar a versão “oficial” do site, edite o ficheiro <code>data.js</code> no GitHub.
+      <strong>Nota:</strong> esta versão guarda os dados no navegador do dispositivo. Para atualizar a versão “oficial” do site para todos os dispositivos, edite o ficheiro <code>data.js</code> no GitHub.
     </footer>
   </div>
 
