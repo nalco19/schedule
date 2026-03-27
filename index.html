@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agenda de Férias</title>
+  <title>Agenda Semanal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
+  <div class="bg-blur blur-1"></div>
+  <div class="bg-blur blur-2"></div>
+  <div class="bg-blur blur-3"></div>
 
   <div class="app-shell">
     <header class="hero-card">
       <div class="hero-copy">
-        <span class="badge">Planner bonito • simples • editável</span>
-        <h1>Agenda de Férias</h1>
-        <p class="subtitle">Edite diretamente nas caixas. Guarde no navegador, exporte um backup e mantenha tudo com visual de app clean.</p>
+        <span class="eyebrow">Weekly planner · elegante · editável</span>
+        <h1>Agenda Semanal</h1>
+        <p class="subtitle">Edite os nomes dos dias, ajuste manhã, tarde e noite, e reutilize o mesmo planner nas semanas seguintes com um visual mais premium.</p>
       </div>
 
       <div class="hero-actions">
@@ -28,10 +29,19 @@
       </div>
     </header>
 
-    <section class="info-strip">
-      <div class="info-pill"><strong id="dayCount">0</strong><span>dias</span></div>
-      <div class="info-pill"><strong>3</strong><span>blocos por dia</span></div>
-      <div class="info-pill"><strong>Local</strong><span>guardado no browser</span></div>
+    <section class="stats-row">
+      <div class="stat-card">
+        <span class="stat-label">Dias</span>
+        <strong id="dayCount">0</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Blocos</span>
+        <strong>3 por dia</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Guardar</span>
+        <strong>No navegador</strong>
+      </div>
     </section>
 
     <main>
@@ -39,7 +49,7 @@
     </main>
 
     <footer class="footer-note">
-      <strong>Nota:</strong> esta versão guarda os dados no navegador do dispositivo. Para atualizar a versão “oficial” do site para todos os dispositivos, edite o ficheiro <code>data.js</code> no GitHub.
+      <strong>Dica:</strong> agora pode trocar o nome de cada dia diretamente na app. Exemplo: mudar “Sab 28 MAR” para “Seg 6 ABR”.
     </footer>
   </div>
 

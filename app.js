@@ -1,4 +1,11 @@
-const STORAGE_KEY = "agenda-ferias-storage-v2";
+const STORAGE_KEY = "agenda-ferias-storage-v3";
+
+function getDefaultData() {
+  if (typeof structuredClone === "function") {
+    return structuredClone(window.DEFAULT_SCHEDULE);
+  }
+  return JSON.parse(JSON.stringify(window.DEFAULT_SCHEDULE));
+}
 
 function getData() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -9,7 +16,7 @@ function getData() {
       console.error("Erro ao ler dados guardados:", error);
     }
   }
-  return structuredClone(window.DEFAULT_SCHEDULE);
+  return getDefaultData();
 }
 
 function saveData(data) {
@@ -18,7 +25,7 @@ function saveData(data) {
 
 function resetData() {
   localStorage.removeItem(STORAGE_KEY);
-  state = structuredClone(window.DEFAULT_SCHEDULE);
+  state = getDefaultData();
   render();
   showToast("Versão original reposta.");
 }
@@ -28,7 +35,7 @@ function exportData() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "agenda-ferias-backup.json";
+  a.download = "agenda-semanal-backup.json";
   a.click();
   URL.revokeObjectURL(url);
   showToast("Backup exportado.");
@@ -43,9 +50,7 @@ function showToast(message) {
   toast.textContent = message;
   document.body.appendChild(toast);
 
-  setTimeout(() => {
-    toast.remove();
-  }, 2200);
+  setTimeout(() => toast.remove(), 2200);
 }
 
 function updateField(index, field, value) {
@@ -89,6 +94,38 @@ function createBlock(index, field, value) {
   return wrapper;
 }
 
+function createDayHeader(index, dayValue) {
+  const header = document.createElement("div");
+  header.className = "day-header";
+
+  const titleWrap = document.createElement("div");
+  titleWrap.className = "day-title-wrap";
+
+  const dayLabel = document.createElement("span");
+  dayLabel.className = "day-label";
+  dayLabel.textContent = "Nome do dia";
+
+  const titleInput = document.createElement("input");
+  titleInput.className = "day-title-input";
+  titleInput.type = "text";
+  titleInput.value = dayValue || "";
+  titleInput.placeholder = "Ex: Seg 6 ABR";
+  titleInput.addEventListener("input", (event) => {
+    updateField(index, "day", event.target.value);
+  });
+
+  const mini = document.createElement("span");
+  mini.className = "day-mini";
+  mini.textContent = `Dia ${index + 1}`;
+
+  titleWrap.appendChild(dayLabel);
+  titleWrap.appendChild(titleInput);
+  header.appendChild(titleWrap);
+  header.appendChild(mini);
+
+  return header;
+}
+
 function render() {
   const grid = document.getElementById("scheduleGrid");
   const dayCount = document.getElementById("dayCount");
@@ -99,21 +136,7 @@ function render() {
     const card = document.createElement("article");
     card.className = "day-card";
 
-    const header = document.createElement("div");
-    header.className = "day-header";
-
-    const title = document.createElement("h2");
-    title.className = "day-title";
-    title.textContent = dayData.day;
-
-    const mini = document.createElement("span");
-    mini.className = "day-mini";
-    mini.textContent = `Dia ${index + 1}`;
-
-    header.appendChild(title);
-    header.appendChild(mini);
-
-    card.appendChild(header);
+    card.appendChild(createDayHeader(index, dayData.day));
     card.appendChild(createBlock(index, "morning", dayData.morning));
     card.appendChild(createBlock(index, "afternoon", dayData.afternoon));
     card.appendChild(createBlock(index, "night", dayData.night));

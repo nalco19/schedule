@@ -1,20 +1,22 @@
-VERSÃO BONITA — AGENDA DE FÉRIAS
+VERSÃO PREMIUM — COMO ATUALIZAR NO GITHUB
 
-Para substituir a versão atual no GitHub:
-1) Abra o repositório
-2) Faça upload destes ficheiros, substituindo os antigos:
-   - index.html
-   - style.css
-   - app.js
-   - data.js
-3) Clique em Commit changes
-4) Espere 30-60 segundos
-5) Atualize o link do site
+Pode substituir apenas estes 3 ficheiros:
+- index.html
+- style.css
+- app.js
 
-O que mudou:
-- visual mais moderno
-- botões mais bonitos
-- cartões com efeito app
-- ícones para manhã / tarde / noite
-- cores mais suaves
-- melhor aspeto em telemóvel
+O ficheiro data.js só precisa de ser alterado se quiser mudar os dados originais.
+
+PASSOS:
+1. Abra o repositório no GitHub.
+2. Vá a Code.
+3. Clique em Add file > Upload files.
+4. Arraste os novos ficheiros.
+5. Commit changes.
+6. Espere um minuto.
+7. Atualize o link do GitHub Pages.
+
+NOVIDADES:
+- visual mais elegante, premium e feminino
+- nomes dos dias editáveis na própria app
+- continua a guardar no navegador
