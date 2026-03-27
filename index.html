@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda de Férias</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">App simples • GitHub Pages</p>
+        <h1>Agenda de Férias</h1>
+        <p class="subtitle">Pode editar diretamente nas caixas. As alterações ficam guardadas neste navegador.</p>
+      </div>
+
+      <div class="actions">
+        <button id="saveBtn" class="primary">Guardar</button>
+        <button id="resetBtn">Repor original</button>
+        <button id="exportBtn">Exportar backup</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="scheduleGrid" class="schedule-grid"></section>
+    </main>
+
+    <footer class="footer-note">
+      <strong>Nota:</strong> esta versão guarda os dados no navegador do dispositivo. Para atualizar a versão “oficial” do site, edite o ficheiro <code>data.js</code> no GitHub.
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
