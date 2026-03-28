@@ -19,6 +19,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="lockScreen" class="lock-screen">
+  <div class="lock-card">
+    <div class="lock-badge">ACESSO PRIVADO</div>
+    <h1>Agenda Semanal</h1>
+    <p>Introduza a password para abrir o planner.</p>
+    <input type="password" id="passwordInput" placeholder="Password" />
+    <button id="unlockButton">Entrar</button>
+    <p id="passwordError" class="password-error"></p>
+  </div>
+</div>
   <div class="bg-blur blur-1"></div>
   <div class="bg-blur blur-2"></div>
   <div class="bg-blur blur-3"></div>
@@ -48,7 +58,36 @@
     </footer>
   </div>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+ <script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  const APP_PASSWORD = "1234";
+
+  const lockScreen = document.getElementById("lockScreen");
+  const passwordInput = document.getElementById("passwordInput");
+  const unlockButton = document.getElementById("unlockButton");
+  const passwordError = document.getElementById("passwordError");
+
+  function unlockApp() {
+    if (passwordInput.value === APP_PASSWORD) {
+      lockScreen.style.display = "none";
+      sessionStorage.setItem("agendaUnlocked", "true");
+    } else {
+      passwordError.textContent = "Password incorreta.";
+    }
+  }
+
+  if (sessionStorage.getItem("agendaUnlocked") === "true") {
+    lockScreen.style.display = "none";
+  }
+
+  unlockButton.addEventListener("click", unlockApp);
+
+  passwordInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      unlockApp();
+    }
+  });
+</script>
 </body>
 </html>
