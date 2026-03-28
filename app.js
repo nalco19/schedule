@@ -139,12 +139,10 @@ function createDayHeader(index, dayValue) {
 
 function render() {
   const grid = document.getElementById("scheduleGrid");
-  const dayCount = document.getElementById("dayCount");
 
-  if (!grid || !dayCount) return;
+  if (!grid) return;
 
   grid.innerHTML = "";
-  dayCount.textContent = Array.isArray(state) ? state.length : 0;
 
   if (!Array.isArray(state)) return;
 
