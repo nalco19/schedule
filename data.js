@@ -1,4 +1,4 @@
-window.scheduleData = [
+window.DEFAULT_SCHEDULE = [
   {
     day: "Seg 6 ABR",
     morning: "Exemplo manhã",
