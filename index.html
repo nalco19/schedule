@@ -16,78 +16,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="lockScreen" class="lock-screen">
-  <div class="lock-card">
-    <div class="lock-badge">ACESSO PRIVADO</div>
-    <h1>Agenda Semanal</h1>
-    <p>Introduza a password para abrir o planner.</p>
-    <input type="password" id="passwordInput" placeholder="Password" />
-    <button id="unlockButton">Entrar</button>
-    <p id="passwordError" class="password-error"></p>
-  </div>
-</div>
+
   <div class="bg-blur blur-1"></div>
   <div class="bg-blur blur-2"></div>
   <div class="bg-blur blur-3"></div>
 
   <div class="app-shell">
-    <section class="stats-row">
-      <div class="stat-card">
-        <span class="stat-label">Dias</span>
-        <strong id="dayCount">0</strong>
-      </div>
-      <div class="stat-card">
-        <span class="stat-label">Blocos</span>
-        <strong>3 por dia</strong>
-      </div>
-      <div class="stat-card">
-        <span class="stat-label">Guardar</span>
-        <strong>No navegador</strong>
-      </div>
-    </section>
-
     <main>
       <section id="scheduleGrid" class="schedule-grid"></section>
     </main>
-
-    <footer class="footer-note">
-      <strong>Dica:</strong> agora pode trocar o nome de cada dia diretamente na app. Exemplo: mudar “Sab 28 MAR” para “Seg 6 ABR”.
-    </footer>
   </div>
 
- <script src="data.js"></script>
-<script src="app.js"></script>
-<script>
-  const APP_PASSWORD = "9585";
-
-  const lockScreen = document.getElementById("lockScreen");
-  const passwordInput = document.getElementById("passwordInput");
-  const unlockButton = document.getElementById("unlockButton");
-  const passwordError = document.getElementById("passwordError");
-
-  function unlockApp() {
-    if (passwordInput.value === APP_PASSWORD) {
-      lockScreen.style.display = "none";
-      sessionStorage.setItem("agendaUnlocked", "true");
-    } else {
-      passwordError.textContent = "Password incorreta.";
-    }
-  }
-
-  if (sessionStorage.getItem("agendaUnlocked") === "true") {
-    lockScreen.style.display = "none";
-  }
-
-  unlockButton.addEventListener("click", unlockApp);
-
-  passwordInput.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-      unlockApp();
-    }
-  });
-</script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
