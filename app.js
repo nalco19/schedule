@@ -1,14 +1,18 @@
 const STORAGE_KEY = "agenda-ferias-storage-v3";
 
 function getDefaultData() {
+  const defaultSchedule = window.DEFAULT_SCHEDULE || [];
+
   if (typeof structuredClone === "function") {
-    return structuredClone(window.DEFAULT_SCHEDULE);
+    return structuredClone(defaultSchedule);
   }
-  return JSON.parse(JSON.stringify(window.DEFAULT_SCHEDULE));
+
+  return JSON.parse(JSON.stringify(defaultSchedule));
 }
 
 function getData() {
   const saved = localStorage.getItem(STORAGE_KEY);
+
   if (saved) {
     try {
       return JSON.parse(saved);
@@ -16,6 +20,7 @@ function getData() {
       console.error("Erro ao ler dados guardados:", error);
     }
   }
+
   return getDefaultData();
 }
 
@@ -31,13 +36,17 @@ function resetData() {
 }
 
 function exportData() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify(state, null, 2)], {
+    type: "application/json"
+  });
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
   a.download = "agenda-semanal-backup.json";
   a.click();
   URL.revokeObjectURL(url);
+
   showToast("Backup exportado.");
 }
 
@@ -82,6 +91,7 @@ function createBlock(index, field, value) {
   const textarea = document.createElement("textarea");
   textarea.value = value || "";
   textarea.placeholder = `Escreva aqui o plano para ${meta.label.toLowerCase()}...`;
+
   textarea.addEventListener("input", (event) => {
     updateField(index, field, event.target.value);
   });
@@ -110,6 +120,7 @@ function createDayHeader(index, dayValue) {
   titleInput.type = "text";
   titleInput.value = dayValue || "";
   titleInput.placeholder = "Ex: Seg 6 ABR";
+
   titleInput.addEventListener("input", (event) => {
     updateField(index, "day", event.target.value);
   });
@@ -129,8 +140,13 @@ function createDayHeader(index, dayValue) {
 function render() {
   const grid = document.getElementById("scheduleGrid");
   const dayCount = document.getElementById("dayCount");
+
+  if (!grid || !dayCount) return;
+
   grid.innerHTML = "";
-  dayCount.textContent = state.length;
+  dayCount.textContent = Array.isArray(state) ? state.length : 0;
+
+  if (!Array.isArray(state)) return;
 
   state.forEach((dayData, index) => {
     const card = document.createElement("article");
@@ -147,12 +163,23 @@ function render() {
 
 let state = getData();
 
-document.getElementById("saveBtn").addEventListener("click", () => {
-  saveData(state);
-  showToast("Alterações guardadas neste navegador.");
-});
+const saveBtn = document.getElementById("saveBtn");
+const resetBtn = document.getElementById("resetBtn");
+const exportBtn = document.getElementById("exportBtn");
 
-document.getElementById("resetBtn").addEventListener("click", resetData);
-document.getElementById("exportBtn").addEventListener("click", exportData);
+if (saveBtn) {
+  saveBtn.addEventListener("click", () => {
+    saveData(state);
+    showToast("Alterações guardadas neste navegador.");
+  });
+}
+
+if (resetBtn) {
+  resetBtn.addEventListener("click", resetData);
+}
+
+if (exportBtn) {
+  exportBtn.addEventListener("click", exportData);
+}
 
 render();
