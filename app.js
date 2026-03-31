@@ -1,18 +1,14 @@
 const STORAGE_KEY = "agenda-ferias-storage-v3";
 
 function getDefaultData() {
-  const defaultSchedule = window.DEFAULT_SCHEDULE || [];
-
   if (typeof structuredClone === "function") {
-    return structuredClone(defaultSchedule);
+    return structuredClone(window.DEFAULT_SCHEDULE);
   }
-
-  return JSON.parse(JSON.stringify(defaultSchedule));
+  return JSON.parse(JSON.stringify(window.DEFAULT_SCHEDULE));
 }
 
 function getData() {
   const saved = localStorage.getItem(STORAGE_KEY);
-
   if (saved) {
     try {
       return JSON.parse(saved);
@@ -20,7 +16,6 @@ function getData() {
       console.error("Erro ao ler dados guardados:", error);
     }
   }
-
   return getDefaultData();
 }
 
@@ -39,14 +34,12 @@ function exportData() {
   const blob = new Blob([JSON.stringify(state, null, 2)], {
     type: "application/json"
   });
-
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
   a.download = "agenda-semanal-backup.json";
   a.click();
   URL.revokeObjectURL(url);
-
   showToast("Backup exportado.");
 }
 
@@ -65,7 +58,6 @@ function showToast(message) {
 function updateField(index, field, value) {
   state[index][field] = value;
   saveData(state);
-}
 }
 
 function getBlockMeta(field) {
@@ -93,7 +85,6 @@ function createBlock(index, field, value) {
   const textarea = document.createElement("textarea");
   textarea.value = value || "";
   textarea.placeholder = `Escreva aqui o plano para ${meta.label.toLowerCase()}...`;
-
   textarea.addEventListener("input", (event) => {
     updateField(index, field, event.target.value);
   });
@@ -122,7 +113,6 @@ function createDayHeader(index, dayValue) {
   titleInput.type = "text";
   titleInput.value = dayValue || "";
   titleInput.placeholder = "Ex: Seg 6 ABR";
-
   titleInput.addEventListener("input", (event) => {
     updateField(index, "day", event.target.value);
   });
@@ -141,12 +131,9 @@ function createDayHeader(index, dayValue) {
 
 function render() {
   const grid = document.getElementById("scheduleGrid");
-
-  if (!grid) return;
-
+  const dayCount = document.getElementById("dayCount");
   grid.innerHTML = "";
-
-  if (!Array.isArray(state)) return;
+  dayCount.textContent = state.length;
 
   state.forEach((dayData, index) => {
     const card = document.createElement("article");
@@ -163,23 +150,12 @@ function render() {
 
 let state = getData();
 
-const saveBtn = document.getElementById("saveBtn");
-const resetBtn = document.getElementById("resetBtn");
-const exportBtn = document.getElementById("exportBtn");
+document.getElementById("saveBtn").addEventListener("click", () => {
+  saveData(state);
+  showToast("Alterações guardadas neste navegador.");
+});
 
-if (saveBtn) {
-  saveBtn.addEventListener("click", () => {
-    saveData(state);
-    showToast("Alterações guardadas neste navegador.");
-  });
-}
-
-if (resetBtn) {
-  resetBtn.addEventListener("click", resetData);
-}
-
-if (exportBtn) {
-  exportBtn.addEventListener("click", exportData);
-}
+document.getElementById("resetBtn").addEventListener("click", resetData);
+document.getElementById("exportBtn").addEventListener("click", exportData);
 
 render();
