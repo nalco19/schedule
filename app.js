@@ -64,6 +64,8 @@ function showToast(message) {
 
 function updateField(index, field, value) {
   state[index][field] = value;
+  saveData(state);
+}
 }
 
 function getBlockMeta(field) {
